@@ -15,13 +15,59 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 
     <script type="text/javascript" src="https://unpkg.com/web3@latest/dist/web3.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/web3modal@1.9.4/dist/index.js"></script>
     <script type="text/javascript"
         src="https://unpkg.com/@walletconnect/web3-provider@1.6.5/dist/umd/index.min.js"></script>
+
+
+
+  <script type="application/javascript">
+        // Инициализация Telegram WebApp
+        document.addEventListener('DOMContentLoaded', function() {
+            // Проверяем, запущено ли приложение в Telegram
+            if (window.Telegram && window.Telegram.WebApp) {
+                // Уведомляем Telegram, что приложение загружено
+                window.Telegram.WebApp.ready();
+                
+                // Отключаем возможность закрытия свайпом вниз
+                window.Telegram.WebApp.disableVerticalSwipes();
+                
+                // Расширяем приложение
+                window.Telegram.WebApp.expand();
+                
+                // Получаем и сохраняем данные пользователя
+                try {
+                    window.TelegramGameData.initData = window.Telegram.WebApp.initData;
+                    window.TelegramGameData.user = window.Telegram.WebApp.initDataUnsafe.user;
+                    
+                    console.log('Telegram WebApp initialized with user:', window.TelegramGameData.user);
+                } catch (e) {
+                    console.error('Error getting Telegram user data:', e);
+                }
+                
+                // Запрашиваем полноэкранный режим после небольшой задержки
+                setTimeout(function() {
+                    window.Telegram.WebApp.requestFullscreen();
+                }, 1000);
+                
+                // Обработчики событий
+                window.Telegram.WebApp.onEvent('fullscreenChanged', function() {
+                    console.log('Fullscreen mode changed:', window.Telegram.WebApp.isFullscreen);
+                });
+                
+                window.Telegram.WebApp.onEvent('fullscreenFailed', function(params) {
+                    console.error('Failed to enter fullscreen mode:', params.error);
+                });
+            }
+        });
+    </script>
+
+
+
 
 
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
