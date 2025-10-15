@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timer Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #333;
+            color: white;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .test-button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .test-button:hover {
+            background: #45a049;
+        }
+        .status {
+            background: #222;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .error {
+            color: #ff6b6b;
+        }
+        .success {
+            color: #51cf66;
+        }
+        .info {
+            color: #74c0fc;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎮 Billiard Timer Test</h1>
+        
+        <div class="status">
+            <h3>Статус исправлений:</h3>
+            <div id="status-list">
+                <div class="success">✅ Исправлена ошибка setVisible() в CPlayerGUI</div>
+                <div class="success">✅ Добавлены проверки на null для _oTimerText</div>
+                <div class="success">✅ Добавлен начальный текст "30s" вместо пустой строки</div>
+                <div class="success">✅ Добавлена функция testTimer() для отладки</div>
+                <div class="info">ℹ️ Таймер временно отключен (TURN_TIMER_ENABLED = false)</div>
+            </div>
+        </div>
+
+        <div class="status">
+            <h3>Инструкции по тестированию:</h3>
+            <ol>
+                <li>Запустите игру (одиночную или мультиплеер)</li>
+                <li>Откройте консоль браузера (F12)</li>
+                <li>Введите команду: <code>testTimer()</code></li>
+                <li>Должен появиться таймер на 10 секунд</li>
+                <li>Таймер должен стать красным за 10 секунд до окончания</li>
+            </ol>
+        </div>
+
+        <div class="status">
+            <h3>Для включения полного таймера:</h3>
+            <ol>
+                <li>В файле <code>public/js/settings.js</code></li>
+                <li>Измените: <code>TURN_TIMER_ENABLED = true</code></li>
+                <li>Перезагрузите страницу</li>
+                <li>Запустите мультиплеерную игру</li>
+            </ol>
+        </div>
+
+        <div class="status">
+            <h3>Настройки таймера:</h3>
+            <ul>
+                <li><strong>TURN_TIMER_DURATION:</strong> время на ход (секунды)</li>
+                <li><strong>TURN_TIMER_WARNING:</strong> когда показывать красный цвет</li>
+                <li><strong>TURN_TIMER_ENABLED:</strong> включить/выключить таймер</li>
+            </ul>
+        </div>
+
+        <button class="test-button" onclick="window.open('/', '_blank')">
+            🎮 Открыть игру
+        </button>
+        
+        <button class="test-button" onclick="showConsoleHelp()">
+            💡 Показать команды консоли
+        </button>
+    </div>
+
+    <script>
+        function showConsoleHelp() {
+            alert(`Команды для консоли браузера:
+
+testTimer() - запустить тест таймера на 10 секунд
+
+Пример:
+1. Откройте консоль (F12)
+2. Введите: testTimer()
+3. Нажмите Enter
+
+Таймер должен появиться у текущего игрока.`);
+        }
+        
+        // Проверяем доступность функций
+        setTimeout(() => {
+            if (typeof window.testTimer === 'function') {
+                document.getElementById('status-list').innerHTML += 
+                    '<div class="success">✅ Функция testTimer() доступна</div>';
+            } else {
+                document.getElementById('status-list').innerHTML += 
+                    '<div class="error">❌ Функция testTimer() не найдена (игра не запущена)</div>';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

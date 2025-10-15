@@ -1,0 +1,10 @@
+name: New MCP server
+version: 0.0.1
+schema: v1
+mcpServers:
+  - name: memory-bank-mcp
+    command: npx
+    args:
+      - -y
+      - "@allpepper/memory-bank-mcp"
+    env: {}

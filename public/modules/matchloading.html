@@ -1,0 +1,49 @@
+<!-- Redis Matchmaking System Scripts -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/matchmaking/telegramroomlist.js"></script>
+<script src="/modules/matchmaking/matchmaking.js"></script>
+<script src="/modules/matchmaking/websocket.js"></script>
+<script src="/modules/matchmaking/integration.js"></script>
+
+<script>
+// Инициализация Redis матчмейкинга после загрузки страницы
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🎯 Redis Matchmaking: Scripts loaded successfully');
+  
+  // Проверяем доступность всех компонентов
+  const components = {
+    'TelegramRoomList': typeof TelegramRoomList !== 'undefined',
+    'RedisMatchmaking': typeof RedisMatchmaking !== 'undefined',
+    'MatchmakingWebSocket': typeof MatchmakingWebSocket !== 'undefined',
+    'MatchmakingIntegration': typeof MatchmakingIntegration !== 'undefined'
+  };
+  
+  console.log('🎯 Redis Matchmaking: Components status:', components);
+  
+  // Проверяем, все ли компоненты загрузились
+  const allLoaded = Object.values(components).every(status => status === true);
+  
+  if (allLoaded) {
+    console.log('✅ Redis Matchmaking: All components loaded successfully');
+  } else {
+    console.warn('⚠️ Redis Matchmaking: Some components not loaded:', 
+      Object.entries(components).filter(([name, loaded]) => !loaded));
+  }
+});
+
+// Глобальная функция для получения статуса матчмейкинга
+window.getMatchmakingStatus = function() {
+  if (window.redisMatchmaking) {
+    return window.redisMatchmaking.getConnectionStatus();
+  }
+  return { error: 'Matchmaking not initialized' };
+};
+
+// Глобальная функция для отмены поиска матча
+window.cancelMatchmaking = function() {
+  if (window.redisMatchmaking) {
+    return window.redisMatchmaking.cancelQuickMatch();
+  }
+  return false;
+};
+</script>
