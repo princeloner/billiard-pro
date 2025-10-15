@@ -27,6 +27,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://127.0.0.1:2083',
   'http://127.0.0.1:3000',
+  'https://billiard-pro.onrender.com',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
@@ -118,6 +119,11 @@ const io = socketIo(server, {
         return callback(null, true);
       }
 
+      // Разрешаем Render домены
+      if (origin && origin.includes('.onrender.com')) {
+        return callback(null, true);
+      }
+
       // Разрешаем локальные адреса
       if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
         return callback(null, true);
@@ -134,9 +140,24 @@ const io = socketIo(server, {
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"]
   },
-  pingTimeout: 60000,
-  pingInterval: 25000,
-  transports: ['websocket', 'polling']
+
+  // ОПТИМИЗАЦИЯ: Настройки для уменьшения задержек и фризов
+  pingTimeout: 30000,     // 30 сек (было 60) - быстрее обнаруживает разрывы
+  pingInterval: 10000,    // 10 сек (было 25) - чаще проверяет соединение
+
+  // Приоритет WebSocket для меньшей задержки
+  transports: ['websocket', 'polling'],
+
+  // Сжатие данных для уменьшения трафика
+  perMessageDeflate: {
+    threshold: 1024 // Сжимать пакеты больше 1KB
+  },
+
+  // Увеличенный буфер для стабильности
+  maxHttpBufferSize: 1e6, // 1MB
+
+  // Быстрое переподключение при разрыве
+  allowEIO3: true
 });
 
 // Apply session middleware to Socket.IO

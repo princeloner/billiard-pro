@@ -38,9 +38,7 @@
     "dotenv-webpack": "^8.0.1",
     "jest": "^30.2.0",
     "nodemon": "^3.0.1",
-    "socket.io-client": "^4.8.1",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
-    "webpack-filter-warnings-plugin": "^1.2.1"
+    "socket.io-client": "^4.8.1"
+   
   }
 }

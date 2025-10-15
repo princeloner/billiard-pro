@@ -934,6 +934,14 @@ function CNTable(oParentContainer, oCpuDifficultyParams, playerId) {
       socket.emit("_onReleaseHitArea");
     }
 
+    // ИСПРАВЛЕНИЕ ЛОЖНЫХ УДАРОВ НА МОБИЛЬНЫХ:
+    // На мобильных устройствах удар происходит ТОЛЬКО через ShotPowerBar
+    // Касание экрана используется только для вращения кия
+    if (s_bMobile) {
+      return; // Не вызываем _moveStick() на мобильных
+    }
+
+    // На десктопе работает как раньше (можно стрелять мышкой)
     switch (_iState) {
       case STATE_TABLE_MOVE_STICK: {
         s_oTable._moveStick();

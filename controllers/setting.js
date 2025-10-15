@@ -4,8 +4,9 @@ module.exports.CANVAS_HEIGHT = 1080;
 module.exports.EDGEBOARD_X = 126;
 module.exports.EDGEBOARD_Y = 100;
 
+
 module.exports.FPS = 60;
-module.exports.FPS_TIME = 1000 / 60;
+module.exports.FPS_TIME = 1000 / 30;
 module.exports.DISABLE_SOUND_MOBILE = false;
 module.exports.FONT_GAME = "Montserrat";
 module.exports.PRIMARY_FONT_COLOR = "#fff";
